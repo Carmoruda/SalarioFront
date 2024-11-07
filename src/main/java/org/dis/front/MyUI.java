@@ -9,7 +9,10 @@ import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.*;
 import org.dis.back.BRException;
 import org.dis.back.EmpleadoBR;
+import org.dis.back.TipoEmpleado;
 import org.w3c.dom.Text;
+
+import java.util.Arrays;
 
 /**
  * This UI is the application entry point. A UI may either represent a browser window 
@@ -38,12 +41,16 @@ public class MyUI extends UI {
         final VerticalLayout labelsBruto = new VerticalLayout();
         final VerticalLayout labelsNeto = new VerticalLayout();
 
-        TextField tipo = creaLabel("Tipo de empleado");
+        // TextField tipo = creaLabel("Tipo de empleado");
+
+        ComboBox <String> tipoEmpleadoComboBox = new ComboBox<>("Tipo de empleado",
+                Arrays.asList(TipoEmpleado.ENCARGADO, TipoEmpleado.VENDEDOR));
+
         TextField ventasMes = creaLabel("Ventas del mes");
         TextField horasExtra = creaLabel("Horas extra");
         TextField inputSalarioBruto = creaLabel("Salario bruto del empleado");
 
-        salarioBruto.addComponents(tipo, ventasMes, horasExtra);
+        salarioBruto.addComponents(tipoEmpleadoComboBox, ventasMes, horasExtra);
         salarioNeto.addComponents(inputSalarioBruto);
 
         Button button = new Button("calcular");
@@ -52,14 +59,14 @@ public class MyUI extends UI {
 
         Button botonSalarioBruto = new Button("Calcula Salario Bruto");
         botonSalarioBruto.addClickListener(e -> {
-            String tipoEmpleadoIn = tipo.getValue();
+            String tipoEmpleadoIn = tipoEmpleadoComboBox.getValue();
             double ventasMesIn = Double.parseDouble(ventasMes.getValue());
             double horasExtrasIn = Double.parseDouble(horasExtra.getValue());
 
             EmpleadoBR empleado = new EmpleadoBR();
             try {
                 double resultado = empleado.calculaSalarioBruto(tipoEmpleadoIn, ventasMesIn, horasExtrasIn);
-                Label labelSalarioBruto = new Label("El salario bruto obtenido es:" + resultado + "€");
+                Label labelSalarioBruto = new Label("El salario bruto obtenido es: " + resultado + "€");
                 labelsBruto.removeAllComponents();
                 labelsBruto.addComponent(labelSalarioBruto);
             } catch (BRException ex) {
