@@ -3,7 +3,7 @@ package org.dis.back;
 //Como extiende a Exception, hereda todos los métodos necesarios
 //para funcionar correctamente en try-catch o throw
 
-public class BRException extends Exception{
+public class BRException extends Exception {
     public BRException(String causa) {
         super (causa);
     }
