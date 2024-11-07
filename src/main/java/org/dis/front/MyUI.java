@@ -22,21 +22,28 @@ import com.vaadin.ui.VerticalLayout;
 @Theme("mytheme")
 public class MyUI extends UI {
 
+    private TextField creaLabel(String texto)
+    {
+        TextField etiqueta = new TextField();
+        etiqueta.setCaption(texto);
+        return etiqueta;
+    }
+
     @Override
     protected void init(VaadinRequest vaadinRequest) {
         final VerticalLayout layout = new VerticalLayout();
-        
-        final TextField name = new TextField();
-        name.setCaption("Type your name here:");
 
-        Button button = new Button("Click Me");
+        TextField tipo = creaLabel("Tipo de empleado");
+        TextField ventasMes = creaLabel("Ventas del mes");
+        TextField horasExtra = creaLabel("Horas extra");
+
+        Button button = new Button("calcular");
         button.addClickListener(e -> {
-            layout.addComponent(new Label("Thanks " + name.getValue() 
-                    + ", it works!"));
+
         });
-        
-        layout.addComponents(name, button);
-        
+
+        layout.addComponents(tipo, ventasMes, horasExtra, button);
+
         setContent(layout);
     }
 
